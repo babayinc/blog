@@ -26,7 +26,9 @@ configure do
 end
 
 get '/' do
-	erb "Hello!"
+	init_db
+	@results = @db.execute 'SELECT * FROM Posts ORDER BY id DESC'
+	erb :index
 end
 
 get '/contacts' do
