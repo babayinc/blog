@@ -66,9 +66,14 @@ get '/details/:post_id' do
 
 	post_id = params[:post_id]
 
-	results = @db.execute 'SELECT * FROM Posts WHERE (id=?)', [post_id]
+	results = @db.execute 'SELECT * FROM Posts WHERE id=?', [post_id]
 	@row = results[0]
+
+	@comments = @db.execute 'SELECT * FROM Comments WHERE post_id=? ORDER BY id', [post_id]
+
 	erb :details
+
+
 end
 
 post '/details/:post_id' do
@@ -90,4 +95,6 @@ post '/details/:post_id' do
 			datetime(),
 			?
 		)', [content, post_id]
+
+	redirect to("details/#{post_id}")
 end
