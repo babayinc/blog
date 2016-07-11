@@ -52,3 +52,13 @@ post '/new' do
 	@db.execute 'INSERT INTO Posts (content, create_date) values (?, datetime())', [content]
 	redirect to('/')
 end
+
+get '/details/:id' do
+
+	post_id = params[:id]
+
+	results = @db.execute 'SELECT * FROM Posts WHERE (id=?)', [post_id]
+	@row = results[0]
+	erb :details
+end
+
