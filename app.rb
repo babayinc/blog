@@ -54,11 +54,24 @@ end
 
 post '/new' do
 	content = params[:content]
+	user_name = params[:user_name]
 	if content.length <= 0
 		@error = 'Type post text'
 		return erb :new
 	end
-	@db.execute 'INSERT INTO Posts (content, create_date) values (?, datetime())', [content]
+	@db.execute 'INSERT INTO 
+		Posts 
+		(
+			content, 
+			create_date,
+			user_name
+		) 
+		values 
+		(
+			?, 
+			datetime(), 
+			?
+		)', [content, user_name]
 	redirect to('/')
 end
 
